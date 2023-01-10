@@ -11,7 +11,7 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={ darkTheme }>
+    <ThemeProvider theme={ lightTheme }>
       <CssBaseline/>
       <main className={roboto.className}>
         <Component {...pageProps} />
