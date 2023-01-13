@@ -14,20 +14,20 @@ const Entries_INITIAL_STATE: EntriesState = {
     entries: [
         {
             _id: uuidv4(),
-            description: 'Ullamco excepteur cupidatat sint duis proident aliqua aliqua.',
+            description: 'Pendiente: Ullamco excepteur cupidatat sint duis proident aliqua aliqua.',
             status: 'pendiente',
             createdAt: Date.now()
         },
         {
             _id: uuidv4(),
-            description: 'Exercitation aliquip incididunt amet mollit enim ad commodo deserunt ea consectetur.',
-            status: 'pendiente',
+            description: 'En Progreso: Exercitation aliquip incididunt amet mollit enim ad commodo deserunt ea consectetur.',
+            status: 'en-progreso',
             createdAt: Date.now()
         },
         {
             _id: uuidv4(),
-            description: 'Aute adipisicing culpa ullamco culpa excepteur duis sit non.',
-            status: 'pendiente',
+            description: 'Completado: Aute adipisicing culpa ullamco culpa excepteur duis sit non.',
+            status: 'completado',
             createdAt: Date.now()
         },
     ],
