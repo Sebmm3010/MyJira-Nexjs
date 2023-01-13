@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { Roboto } from "@next/font/google";
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { darkTheme, lightTheme } from '../themes';
-import { UIProvider } from '../context/ui';
+import { UIProvider, EntriesProvider } from '../context';
 
 const roboto = Roboto({
   weight: ['300', '400', '700'],
@@ -12,13 +12,15 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <UIProvider>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <main className={roboto.className}>
-          <Component {...pageProps} />
-        </main>
-      </ThemeProvider>
-    </UIProvider>
+    <EntriesProvider>
+      <UIProvider>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <main className={roboto.className}>
+            <Component {...pageProps} />
+          </main>
+        </ThemeProvider>
+      </UIProvider>
+    </EntriesProvider>
   )
 }
