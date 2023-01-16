@@ -1,7 +1,7 @@
+import React, { ChangeEvent, useState } from 'react'
 import { Box, Button, TextField } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddIcon from '@mui/icons-material/PlaylistAddOutlined';
-import React, { ChangeEvent, useState } from 'react'
 
 export const NewEntry = () => {
     const [isAdding, setIsAdding] = useState(false);
@@ -13,7 +13,7 @@ export const NewEntry = () => {
     }
 
     const onSave = () => {
-        if(inputValue.length<=0) return;
+        if (inputValue.length <= 0) return;
 
         console.log(inputValue);
     }
