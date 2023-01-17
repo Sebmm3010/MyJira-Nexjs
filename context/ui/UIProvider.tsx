@@ -4,11 +4,13 @@ import { UIContext, uiReducer } from './';
 export interface UIState {
     sidemenuopen: boolean;
     isAdding: boolean;
+    isDragging: boolean; 
 }
 
 const UI_INITIAL_STATE: UIState = {
     sidemenuopen: false,
-    isAdding:false
+    isAdding: false,
+    isDragging:false
 }
 
 interface Props {
@@ -28,13 +30,17 @@ export const UIProvider: FC<Props> = ({ children }) => {
     const setAddingEntry = (value: boolean) => {
         dispatch({ type: '[Entries] SetAddingEntry', payload: value })
     }
+    const setDraggingEntry = (value: boolean) => {
+        dispatch({ type: 'UI-SetDragging', payload: value })
+    }
 
     return (
         <UIContext.Provider value={{
             ...state,
             openSideMenu,
             closeSideMenu,
-            setAddingEntry
+            setAddingEntry,
+            setDraggingEntry
         }}>
             {children}
         </UIContext.Provider>
