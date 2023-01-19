@@ -3,8 +3,6 @@
 Para correr localmente, es necesario la base de datos
 
 
-MongoDbB URL Local:
+## Configuracion de variables de entorno
 
-```
-mongodb://localhost:27017/entriesdb
-```
+Renombrar el archivo __.env.exple__ a __.env__
