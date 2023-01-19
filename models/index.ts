@@ -1,1 +1,1 @@
-export { default as Entry } from './EntryModel';
+export { default as Entry, type IEntry } from './EntryModel';
