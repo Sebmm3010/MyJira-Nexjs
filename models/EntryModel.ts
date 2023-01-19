@@ -1,4 +1,9 @@
 import mongoose, { Model, Schema } from "mongoose";
+import { Entry } from "../interfaces";
+
+interface IEntry extends Entry  {
+
+}
 
 const entrySchema = new Schema({
     description: { type: String, require: true },
@@ -10,4 +15,6 @@ const entrySchema = new Schema({
             message: '{VALUE} no es un estado permido'
         }
     }
-})
+});
+const EntryModel: Model<IEntry> = mongoose.models.Entry || mongoose.model('Entry', entrySchema);
+export default EntryModel;
