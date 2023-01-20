@@ -6,12 +6,15 @@ import { IEntry } from '../../../models/EntryModel';
 type Data =
     | { msg: string }
     | IEntry[]
+    | IEntry
 
 export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
 
     switch (req.method) {
         case 'GET':
             return getEntries(res);
+        case 'POST':
+            return postEntries(req, res);
 
         default:
             res.status(400).json({ msg: 'Endpoint inexistente' })
@@ -19,7 +22,7 @@ export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
     }
 
 }
-
+// *Metodos
 const getEntries = async (res: NextApiResponse<Data>) => {
 
     await db.connect();
@@ -27,4 +30,29 @@ const getEntries = async (res: NextApiResponse<Data>) => {
     await db.disconnect();
 
     res.status(200).json(entries);
+}
+
+const postEntries = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+    const { description = '' } = req.body;
+
+    const newEntry = new Entry({
+        description,
+        createdAt: Date.now(),
+    });
+
+    try {
+
+        db.connect();
+        await newEntry.save()
+        db.disconnect();
+
+        return res.status(201).json(newEntry);
+    } catch (error) {
+        await db.disconnect();
+        console.log(error);
+        
+        res.status(500).json({ msg: 'Algo salio mal, revisar consola del server' });
+    }
+
 }
