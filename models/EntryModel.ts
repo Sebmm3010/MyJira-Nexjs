@@ -13,7 +13,8 @@ const entrySchema = new Schema({
         enum: {
             values: ['pendiente', 'en-progreso', 'completado'],
             message: '{VALUE} no es un estado permido'
-        }
+        },
+        default:'pendiente'
     }
 });
 const EntryModel: Model<IEntry> = mongoose.models.Entry || mongoose.model('Entry', entrySchema);
