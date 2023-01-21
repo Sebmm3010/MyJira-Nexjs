@@ -16,12 +16,29 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     }
 
     switch (req.method) {
+        case 'GET':
+            return getEntryById(req, res);
         case 'PUT':
             return updateEntryF(req, res);
         default:
             return res.status(400).json({ msg: 'Metodo invalido' })
     }
 
+}
+
+const getEntryById = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { id } = req.query;
+    await db.connect();
+
+    const entryById = await Entry.findById(id);
+
+    await db.disconnect();
+    if (!entryById) {
+        await db.disconnect();
+        return res.status(400).json({ msg: 'No se encontro una entrada con el id: ' + id });
+    }
+
+    res.status(200).json(entryById);
 }
 
 const updateEntryF = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -45,11 +62,11 @@ const updateEntryF = async (req: NextApiRequest, res: NextApiResponse) => {
         const updateEntry = await Entry.findByIdAndUpdate(id, { description, status }, { runValidators: true, new: true });
         await db.disconnect();
         res.status(200).json(updateEntry);
-    } catch (error:any) {
+    } catch (error: any) {
 
-        console.log({error});
+        console.log({ error });
         await db.disconnect();
-        res.status(400).json({msg:error.errors.status.message});
+        res.status(400).json({ msg: error.errors.status.message });
 
     }
 }
