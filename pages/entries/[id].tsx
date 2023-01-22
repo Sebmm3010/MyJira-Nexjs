@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useMemo, useState, useContext } from 'react';
 
 import { GetServerSideProps } from 'next';
 
@@ -11,6 +11,8 @@ import { dbEntries } from '../../database';
 import { Layout } from "../../components/layouts";
 import { Entry, EntryStatus } from '../../interfaces';
 import { useForm } from '../../hooks';
+import { EntriesContext } from '../../context/entries/EntriesContext';
+import { useRouter } from 'next/router';
 
 
 const radioVariants: EntryStatus[] = ['pendiente', 'en-progreso', 'completado'];
@@ -29,14 +31,25 @@ const EntriePage: FC<Props> = ({entry}) => {
     const [status, setStatus] = useState<EntryStatus>(entry.status);
 
     const validation = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
+    
+    const { updatedEntry } = useContext( EntriesContext );
+
+    const router=useRouter();
 
     const onStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
         setStatus(event.target.value as EntryStatus);
     }
 
     const onSave = () => {
-        if (inputValue.length <= 0) return;
-        console.log({ inputValue, status });
+        if (inputValue.trim().length <= 0) return;
+
+        const entryForUpdate:Entry={
+            ...entry,
+            status,
+            description: inputValue
+        }
+        updatedEntry(entryForUpdate, true);
+        router.push('/');
 
     }
     return (
@@ -50,7 +63,7 @@ const EntriePage: FC<Props> = ({entry}) => {
                     <Card>
                         <CardHeader
                             title={`Entrada: ${entry.description.substring(0,30)}...`}
-                            subheader={`Creada hace minutos`}
+                            subheader={`Creada hace ${entry.createdAt} minutos`}
                         />
                         <CardContent>
                             <TextField
