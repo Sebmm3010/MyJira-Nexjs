@@ -1,9 +1,9 @@
 import { ChangeEvent, useState } from "react";
 
-export const useForm = () => {
+export const useForm = (inputState:string) => {
 
 
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(inputState);
     const [touched, setTouched] = useState(false);
 
 
