@@ -8,7 +8,7 @@ import { useForm } from '../../hooks';
 
 export const NewEntry = () => {
 
-    const { inputValue, touched, setInputValue, setTouched, onInputChange }=useForm();
+    const { inputValue, touched, setInputValue, setTouched, onInputChange }=useForm('');
 
     const { addNewEntry } = useContext(EntriesContext);
     const { setAddingEntry, isAdding } = useContext(UIContext);
