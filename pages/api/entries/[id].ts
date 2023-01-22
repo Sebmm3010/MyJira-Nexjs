@@ -20,6 +20,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             return getEntryById(req, res);
         case 'PUT':
             return updateEntryF(req, res);
+        case 'DELETE':
+            return deleteEntry(req, res);
         default:
             return res.status(400).json({ msg: 'Metodo invalido' })
     }
@@ -62,6 +64,31 @@ const updateEntryF = async (req: NextApiRequest, res: NextApiResponse) => {
         const updateEntry = await Entry.findByIdAndUpdate(id, { description, status }, { runValidators: true, new: true });
         await db.disconnect();
         res.status(200).json(updateEntry);
+    } catch (error: any) {
+
+        console.log({ error });
+        await db.disconnect();
+        res.status(400).json({ msg: error.errors.status.message });
+
+    }
+}
+
+const deleteEntry = async (req: NextApiRequest, res: NextApiResponse) => {
+    const { id } = req.query;
+    await db.connect();
+
+    const entryToDelete = await Entry.findById(id);
+
+    if (!entryToDelete) {
+        await db.disconnect();
+        return res.status(400).json({ msg: 'No se encontro una entrada con el id: ' + id });
+    }
+
+    try {
+
+        await Entry.findByIdAndDelete(id);
+        await db.disconnect();
+        res.status(200).json(entryToDelete);
     } catch (error: any) {
 
         console.log({ error });
