@@ -1,10 +1,10 @@
 import { FC, useReducer, ReactNode, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import { Entry } from '../../interfaces';
 
 import { EntriesContext, entriesReducer } from './';
 import entriesApi from '../../apis/entriesApi';
+import { useSnackbar } from 'notistack';
 
 export interface EntriesState {
     entries: Entry[];
@@ -23,6 +23,7 @@ interface Props {
 export const EntriesProvider: FC<Props> = ({ children }) => {
 
     const [state, dispatch] = useReducer(entriesReducer, Entries_INITIAL_STATE);
+    const { enqueueSnackbar } = useSnackbar();
 
     const addNewEntry = async (description: string) => {
         // const newEntry: Entry = {
@@ -37,14 +38,34 @@ export const EntriesProvider: FC<Props> = ({ children }) => {
         dispatch({ type: '[Entries] Add-Entry', payload: data });
     }
 
-    const updatedEntry = async ({ _id, description, status }: Entry) => {
+    const updatedEntry = async ({ _id, description, status }: Entry, showSnackBar=false) => {
         try {
 
             const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status });
 
             dispatch({ type: '[Entries] Entry-Updated', payload: data });
+
+            if(showSnackBar){
+                enqueueSnackbar('Entrada actualizada', {
+                    variant: 'success',
+                    autoHideDuration: 1500,
+                    anchorOrigin: {
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }
+                });
+            }
         } catch (error) {
             console.log({ error });
+
+            enqueueSnackbar('No fue posible actualizar', {
+                variant: 'error',
+                autoHideDuration: 1500,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right'
+                }
+            })
 
         }
     }
