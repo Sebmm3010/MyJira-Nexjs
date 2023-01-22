@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 
 import { capitalize, Grid, Button, Card, CardActions, CardContent, CardHeader, TextField, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio, IconButton } from '@mui/material';
 
@@ -17,8 +17,15 @@ const EntriePage = () => {
 
     const [status, setStatus] = useState<EntryStatus>('pendiente');
 
+    const validation = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
+
     const onStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
         setStatus(event.target.value as EntryStatus);
+    }
+
+    const onSave=()=>{
+        console.log({inputValue, status});
+        
     }
     return (
         <Layout title={'MyJira | Editar'}>
@@ -42,7 +49,10 @@ const EntriePage = () => {
                                 multiline
                                 label='Nueva entrada'
                                 value={inputValue}
+                                onBlur={() => setTouched(true)}
                                 onChange={onInputChange}
+                                error={validation}
+                                helperText={validation && 'Ingrese un valor'}
                             />
 
                             <FormControl>
@@ -74,6 +84,8 @@ const EntriePage = () => {
                                 startIcon={<SaveOutlinedIcon />}
                                 variant="contained"
                                 fullWidth
+                                disabled={inputValue.length<=0}
+                                onClick={onSave}
                             >
                                 Guardar
                             </Button>
