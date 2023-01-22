@@ -13,6 +13,7 @@ import { Entry, EntryStatus } from '../../interfaces';
 import { useForm } from '../../hooks';
 import { EntriesContext } from '../../context/entries/EntriesContext';
 import { useRouter } from 'next/router';
+import { dateFunctions } from '../../utils';
 
 
 const radioVariants: EntryStatus[] = ['pendiente', 'en-progreso', 'completado'];
@@ -63,7 +64,7 @@ const EntriePage: FC<Props> = ({entry}) => {
                     <Card>
                         <CardHeader
                             title={`Entrada: ${entry.description.substring(0,30)}...`}
-                            subheader={`Creada hace ${entry.createdAt} minutos`}
+                            subheader={`Creada ${dateFunctions.calcTimeFromNow(entry.createdAt)}.`}
                         />
                         <CardContent>
                             <TextField
