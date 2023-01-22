@@ -33,7 +33,7 @@ const EntriePage: FC<Props> = ({entry}) => {
 
     const validation = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
     
-    const { updatedEntry } = useContext( EntriesContext );
+    const { updatedEntry, deletedEntry } = useContext( EntriesContext );
 
     const router=useRouter();
 
@@ -52,6 +52,10 @@ const EntriePage: FC<Props> = ({entry}) => {
         updatedEntry(entryForUpdate, true);
         router.push('/');
 
+    }
+    const onDelete=()=>{
+        deletedEntry(entry);
+        router.push('/')
     }
     return (
         <Layout title={'MyJira | Editar'}>
@@ -126,6 +130,7 @@ const EntriePage: FC<Props> = ({entry}) => {
                 right: 30,
                 backgroundColor: 'error.main'
             }}
+            onClick={onDelete}
             >
                 <DeleteOutlinedIcon />
             </IconButton>
