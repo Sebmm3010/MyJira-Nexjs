@@ -4,16 +4,14 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddIcon from '@mui/icons-material/PlaylistAddOutlined';
 import { useContext } from 'react';
 import { EntriesContext, UIContext } from '../../context';
+import { useForm } from '../../hooks';
 
 export const NewEntry = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [touched, setTouched] = useState(false);
+
+    const { inputValue, touched, setInputValue, setTouched, onInputChange }=useForm();
+
     const { addNewEntry } = useContext(EntriesContext);
     const { setAddingEntry, isAdding } = useContext(UIContext);
-
-    const onInputChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(target.value);
-    }
 
     const onSave = () => {
         if (inputValue.length <= 0) {
