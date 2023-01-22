@@ -23,9 +23,10 @@ const EntriePage = () => {
         setStatus(event.target.value as EntryStatus);
     }
 
-    const onSave=()=>{
-        console.log({inputValue, status});
-        
+    const onSave = () => {
+        if (inputValue.length <= 0) return;
+        console.log({ inputValue, status });
+
     }
     return (
         <Layout title={'MyJira | Editar'}>
@@ -84,7 +85,7 @@ const EntriePage = () => {
                                 startIcon={<SaveOutlinedIcon />}
                                 variant="contained"
                                 fullWidth
-                                disabled={inputValue.length<=0}
+                                disabled={inputValue.length <= 0}
                                 onClick={onSave}
                             >
                                 Guardar
