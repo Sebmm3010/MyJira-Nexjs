@@ -20,13 +20,13 @@ interface Props {
 }
 
 
-const EntriePage: FC<Props> = (props) => {
+const EntriePage: FC<Props> = ({entry}) => {
 
-    console.log({ props });
+    console.log({ entry });
 
-    const { inputValue, touched, setTouched, setInputValue, onInputChange } = useForm();
+    const { inputValue, touched, setTouched, setInputValue, onInputChange } = useForm(entry.description);
 
-    const [status, setStatus] = useState<EntryStatus>('pendiente');
+    const [status, setStatus] = useState<EntryStatus>(entry.status);
 
     const validation = useMemo(() => inputValue.length <= 0 && touched, [inputValue, touched]);
 
@@ -49,7 +49,7 @@ const EntriePage: FC<Props> = (props) => {
                 <Grid item xs={12} sm={8} md={6}>
                     <Card>
                         <CardHeader
-                            title={`Entrada: ${inputValue}`}
+                            title={`Entrada: ${entry.description.substring(0,30)}...`}
                             subheader={`Creada hace minutos`}
                         />
                         <CardContent>
@@ -142,7 +142,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return {
         props: {
             id,
-            entry: entry.status
+            entry
         }
     }
 }
