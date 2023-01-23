@@ -11,17 +11,17 @@ interface SeedEntry {
 export const seedData:SeedData = {
     entries: [
         {
-            description: 'Pendiente: Ullamco excepteur cupidatat sint duis proident aliqua aliqua.',
+            description: 'Pendiente: Bienvenido.',
             status: 'pendiente',
             createdAt: Date.now()
         },
         {
-            description: 'En Progreso: Exercitation aliquip incididunt amet mollit enim ad commodo deserunt ea consectetur.',
+            description: 'En Progreso: A este proyecto.',
             status: 'en-progreso',
             createdAt: Date.now()
         },
         {
-            description: 'Completado: Aute adipisicing culpa ullamco culpa excepteur duis sit non.',
+            description: 'Completado: Con NextJs y MongoDB.',
             status: 'completado',
             createdAt: Date.now()
         },
