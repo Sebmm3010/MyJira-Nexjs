@@ -14,7 +14,6 @@ export function middleware(req: NextRequest) {
             url.search=`?msg=${id} no es un mongo id valido`
             return NextResponse.rewrite(url);
         }
-        console.log({id});
     }
 
     return NextResponse.next();

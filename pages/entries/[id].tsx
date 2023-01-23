@@ -25,8 +25,6 @@ interface Props {
 
 const EntriePage: FC<Props> = ({entry}) => {
 
-    console.log({ entry });
-
     const { inputValue, touched, setTouched, setInputValue, onInputChange } = useForm(entry.description);
 
     const [status, setStatus] = useState<EntryStatus>(entry.status);
