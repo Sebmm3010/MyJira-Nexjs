@@ -43,9 +43,9 @@ const postEntries = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     try {
 
-        db.connect();
+        await db.connect();
         await newEntry.save()
-        db.disconnect();
+        await db.disconnect();
 
         return res.status(201).json(newEntry);
     } catch (error) {
